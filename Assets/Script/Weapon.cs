@@ -13,8 +13,7 @@ public class Weapon : MonoBehaviour
     Vector3 enemyDir;
     SpriteRenderer spriter;
     Animator anim;
-    Scanner sc;
-
+    Tower tower;
 
     public GameObject[] weaponPreFabs;
     List<GameObject>[] weaponPools;
@@ -25,7 +24,8 @@ public class Weapon : MonoBehaviour
         
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        sc = GetComponentInParent<Scanner>();
+        tower = GetComponentInParent<Tower>();
+
 
         weaponPools = new List<GameObject>[weaponPreFabs.Length];
 
@@ -34,6 +34,7 @@ public class Weapon : MonoBehaviour
             weaponPools[i] = new List<GameObject>();
         }
     }
+
 
     void FixedUpdate()
     {
@@ -51,12 +52,13 @@ public class Weapon : MonoBehaviour
     }
 
 
+    // 화살 공격
     void Arrow()
     {
-        if (sc.target && Vector2.Distance(sc.target.transform.position, transform.position) <= sc.range)
+        if (tower.target && Vector2.Distance(tower.target.transform.position, transform.position) <= tower.range)
         {
             anim.SetBool("Find", true);
-            enemyDir = sc.target.transform.position - transform.position;
+            enemyDir = tower.target.transform.position - transform.position;
             float rotZ = Mathf.Atan2(enemyDir.y, enemyDir.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(rotZ - 180, Vector3.forward);
         }
@@ -66,6 +68,9 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    
+    
+    //타워의 공격
     public GameObject Attack(int towerIevel)
     {
         GameObject select = null;
