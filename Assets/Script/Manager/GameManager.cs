@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
 
     public static GameManager instance;
-
+    public GameObject obj;
     public int[] killsToLevelUp;
     public int[] levelForNextStage;
     public int curStage;
@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
     {
         isLive = false;
         Time.timeScale = 0;
+        GameObject.FindWithTag("GameOver_UI").gameObject.SetActive(true);
     }
 
     public void GamePause()
